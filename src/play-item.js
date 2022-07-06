@@ -13,7 +13,9 @@ const clearTracks = (player) => {
   // This uses a `while` loop rather than `forEach` because the
   // `TextTrackList` object is a live DOM list (not an array).
   while (i--) {
-    player.removeRemoteTextTrack(tracks[i]);
+    if(i >= 1) {
+    player.removeRemoteTextTrack(tracks[i-1]);
+    }
   }
 };
 
@@ -40,6 +42,7 @@ const playItem = (player, item) => {
 
   player.poster(item.poster || '');
   player.src(item.sources);
+  player.addRemoteTextTrack(item.track);
   clearTracks(player);
 
   player.ready(() => {
